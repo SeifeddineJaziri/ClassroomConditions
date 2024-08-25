@@ -1,16 +1,15 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaTint, FaVolumeUp, FaSun, FaTemperatureHigh, FaFrown } from 'react-icons/fa';
-import { MdOutlineAccessTimeFilled } from "react-icons/md";
-
+import { MdOutlineAccessTimeFilled, MdDateRange } from "react-icons/md";
 
 const classroomsData = [
-  { number: 201, humidity: 75, noise: 60, luminance: 200, temperature: 28, time: '08:00' },
-  { number: 202, humidity: 80, noise: 65, luminance: 180, temperature: 27, time: '09:00' },
-  { number: 203, humidity: 70, noise: 62, luminance: 220, temperature: 29, time: '10:00' },
-  { number: 204, humidity: 78, noise: 58, luminance: 210, temperature: 26, time: '11:00' },
-  { number: 205, humidity: 82, noise: 61, luminance: 190, temperature: 28, time: '12:00' },
-  { number: 206, humidity: 68, noise: 59, luminance: 215, temperature: 27, time: '13:00' },
+  { number: 201, humidity: 75, noise: 60, luminance: 200, temperature: 28, time: '08:00', date: '2024-08-01' },
+  { number: 202, humidity: 80, noise: 65, luminance: 180, temperature: 27, time: '09:00', date: '2024-08-01' },
+  { number: 203, humidity: 70, noise: 62, luminance: 220, temperature: 29, time: '10:00', date: '2024-08-02' },
+  { number: 204, humidity: 78, noise: 58, luminance: 210, temperature: 26, time: '11:00', date: '2024-08-02' },
+  { number: 205, humidity: 82, noise: 61, luminance: 190, temperature: 28, time: '12:00', date: '2024-08-03' },
+  { number: 206, humidity: 68, noise: 59, luminance: 215, temperature: 27, time: '13:00', date: '2024-08-03' },
 ];
 
 const CardContainer = styled.div`
@@ -60,8 +59,13 @@ const TemperatureIcon = styled(FaTemperatureHigh)`
 const FrownIcon = styled(FaFrown)`
   color: #e74c3c; /* Red color */
 `;
+
 const TimeIcon = styled(MdOutlineAccessTimeFilled)`
-  color: #e74c3c; /* New color for the time icon */
+  color: #e74c3c; /* Red color for the time icon */
+`;
+
+const DateIcon = styled(MdDateRange)`
+  color: #e74c3c; /* Red color for the date icon */
 `;
 
 const InputContainer = styled.div`
@@ -76,25 +80,37 @@ const Input = styled.input`
   border-radius: 5px;
   border: 1px solid #ccc;
   width: 200px;
+  margin: 0 10px; /* Spacing between inputs */
 `;
 
 const BadConditions = () => {
   const [searchTime, setSearchTime] = useState('');
+  const [searchDate, setSearchDate] = useState('');
   const [filteredClassrooms, setFilteredClassrooms] = useState(classroomsData);
 
   const handleTimeChange = (e) => {
     const time = e.target.value;
     setSearchTime(time);
+    filterClassrooms(time, searchDate);
+  };
 
-    // Filter classrooms based on the entered time
+  const handleDateChange = (e) => {
+    const date = e.target.value;
+    setSearchDate(date);
+    filterClassrooms(searchTime, date);
+  };
+
+  const filterClassrooms = (time, date) => {
+    let filtered = classroomsData;
+
     if (time) {
-      const filtered = classroomsData.filter(
-        classroom => classroom.time === time
-      );
-      setFilteredClassrooms(filtered);
-    } else {
-      setFilteredClassrooms(classroomsData);
+      filtered = filtered.filter(classroom => classroom.time === time);
     }
+    if (date) {
+      filtered = filtered.filter(classroom => classroom.date === date);
+    }
+
+    setFilteredClassrooms(filtered);
   };
 
   return (
@@ -107,6 +123,12 @@ const BadConditions = () => {
           placeholder="Enter time (e.g., 08:00)"
           value={searchTime}
           onChange={handleTimeChange}
+        />
+        <Input
+          type="date"
+          placeholder="Enter date (YYYY-MM-DD)"
+          value={searchDate}
+          onChange={handleDateChange}
         />
       </InputContainer>
 
@@ -132,6 +154,9 @@ const BadConditions = () => {
             </p>
             <p>
               <IconWrapper><TimeIcon /></IconWrapper> Time: {classroom.time}
+            </p>
+            <p>
+              <IconWrapper><DateIcon /></IconWrapper> Date: {classroom.date}
             </p>
           </Card>
         ))}
