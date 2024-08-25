@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaTint, FaVolumeUp, FaSun, FaTemperatureHigh, FaFrown } from 'react-icons/fa';
 import { MdOutlineAccessTimeFilled, MdDateRange } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 const classroomsData = [
   { number: 201, humidity: 75, noise: 60, luminance: 200, temperature: 28, time: '08:00', date: '2024-08-01' },
@@ -27,6 +28,12 @@ const Card = styled.div`
   padding: 20px;
   width: 250px;
   margin: 10px;
+  transition: box-shadow 0.3s ease, cursor 0.3s ease;
+
+  &:hover {
+    box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.5); 
+    cursor: pointer;
+  }
 `;
 
 const Title = styled.h2`
@@ -87,6 +94,7 @@ const BadConditions = () => {
   const [searchTime, setSearchTime] = useState('');
   const [searchDate, setSearchDate] = useState('');
   const [filteredClassrooms, setFilteredClassrooms] = useState(classroomsData);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   const handleTimeChange = (e) => {
     const time = e.target.value;
@@ -113,6 +121,10 @@ const BadConditions = () => {
     setFilteredClassrooms(filtered);
   };
 
+  const handleCardClick = (classroom) => {
+    navigate(`/classroom/${classroom.number}`, { state: { classroom } });
+  };
+
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Bad Conditions</h1>
@@ -134,7 +146,7 @@ const BadConditions = () => {
 
       <CardContainer>
         {filteredClassrooms.map((classroom, index) => (
-          <Card key={index}>
+          <Card key={index} onClick={() => handleCardClick(classroom)}>
             <Title>
               <IconWrapper><LuminanceIcon /></IconWrapper>
               <IconWrapper><FrownIcon /></IconWrapper>

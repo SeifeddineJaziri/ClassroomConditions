@@ -4,6 +4,7 @@ import Sidebar from './components/Sidebar';
 import Home from './components/Home';
 import GoodConditions from './components/GoodConditions';
 import BadConditions from './components/BadConditions';
+import ClassroomDetail from './components/ClassroomDetail'; // Import ClassroomDetail
 import Navigation from './components/Navigation';
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/good-conditions" element={<GoodConditions />} />
               <Route path="/bad-conditions" element={<BadConditions />} />
+              <Route path="/classroom/:number" element={<ClassroomDetail />} /> {/* Add the ClassroomDetail route */}
             </Routes>
           </div>
         </div>

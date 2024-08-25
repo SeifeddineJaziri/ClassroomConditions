@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { FaTint, FaVolumeUp, FaSun, FaTemperatureHigh, FaSmile } from 'react-icons/fa';
 import { MdOutlineAccessTimeFilled, MdDateRange } from "react-icons/md";
+import { useNavigate } from 'react-router-dom';
 
 const classroomsData = [
   { number: 101, humidity: 55, noise: 40, luminance: 300, temperature: 25, time: '08:00', date: '2024-08-01' },
@@ -11,6 +12,8 @@ const classroomsData = [
   { number: 105, humidity: 62, noise: 41, luminance: 290, temperature: 25, time: '12:00', date: '2024-08-03' },
   { number: 106, humidity: 48, noise: 39, luminance: 315, temperature: 24, time: '13:00', date: '2024-08-03' },
 ];
+
+
 
 const CardContainer = styled.div`
   display: flex;
@@ -27,6 +30,11 @@ const Card = styled.div`
   padding: 20px;
   width: 250px;
   margin: 10px;
+  cursor: pointer; /* Indicate that the card is clickable */
+  transition: box-shadow 0.3s ease-in-out; /* Smooth transition for the box shadow */
+  &:hover {
+  box-shadow: 0px 0px 15px rgba(52, 152, 219, 0.7); /* Blue shadow on hover */
+  }
 `;
 
 const Title = styled.h2`
@@ -83,10 +91,16 @@ const Input = styled.input`
   margin: 0 10px; /* Spacing between inputs */
 `;
 
+
+
+
+
+
 const GoodConditions = () => {
   const [searchTime, setSearchTime] = useState('');
   const [searchDate, setSearchDate] = useState('');
   const [filteredClassrooms, setFilteredClassrooms] = useState(classroomsData);
+  const navigate = useNavigate();
 
   const handleTimeChange = (e) => {
     const time = e.target.value;
@@ -102,15 +116,17 @@ const GoodConditions = () => {
 
   const filterClassrooms = (time, date) => {
     let filtered = classroomsData;
-
     if (time) {
       filtered = filtered.filter(classroom => classroom.time === time);
     }
     if (date) {
       filtered = filtered.filter(classroom => classroom.date === date);
     }
-
     setFilteredClassrooms(filtered);
+  };
+
+  const handleCardClick = (classroom) => {
+    navigate(`/classroom/${classroom.number}`, { state: { classroom } });
   };
 
   return (
@@ -134,7 +150,7 @@ const GoodConditions = () => {
 
       <CardContainer>
         {filteredClassrooms.map((classroom, index) => (
-          <Card key={index}>
+          <Card key={index} onClick={() => handleCardClick(classroom)}>
             <Title>
               <IconWrapper><LuminanceIcon /></IconWrapper>
               <IconWrapper><SmileIcon /></IconWrapper>
