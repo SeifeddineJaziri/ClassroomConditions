@@ -1,6 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaSmile, FaFrown } from 'react-icons/fa';
+import { FaHome, FaSmile } from 'react-icons/fa'; // Removed FaFrown icon
 import styled from 'styled-components';
 import SidebarImage from '../assets/jandouba.jpg'; 
 import SidebarImage2 from '../assets/kahla w zarka.png'; // Replace with your second image path
@@ -17,7 +17,6 @@ const SidebarImageStyled = styled.img`
   width: 210px; /* Set width */
   height: 300px; /* Set height */
   border-radius: 20px; /* Add border radius */
-  margin-bot: 50px; /* Move the image to the bottom */
   margin-bottom: 30px; /* Adjusted margin from the bottom */
 `;
 
@@ -35,10 +34,10 @@ const SidebarLink = styled(NavLink)`
   margin-bottom: 10px;
   padding: 10px;
   font-size: 16px;
-  transition: background-color 0.3s ease; /* Smooth transition for background color */
+  transition: background-color 0.3s ease;
 
   &:hover {
-    background-color: #f0f0f0; /* Gray background color on hover */
+    background-color: #f0f0f0;
   }
 
   &.active {
@@ -63,14 +62,9 @@ const Sidebar = () => {
         <span>Home</span>
       </SidebarLink>
       <Separator />
-      <SidebarLink to="/good-conditions">
+      <SidebarLink to="/good-conditions"> {/* Renamed to sorted-conditions */}
         <IconWrapper><FaSmile /></IconWrapper>
-        <span>Good conditions</span>
-      </SidebarLink>
-      <Separator />
-      <SidebarLink to="/bad-conditions">
-        <IconWrapper><FaFrown /></IconWrapper>
-        <span>Bad conditions</span>
+        <span>Sorted conditions</span>
       </SidebarLink>
       <SidebarImageStyled src={SidebarImage} alt="Sidebar Image" />
       <SidebarImageStyled2 src={SidebarImage2} alt="Second Sidebar Image" />

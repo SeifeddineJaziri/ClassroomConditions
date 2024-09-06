@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { FaTint, FaVolumeUp, FaSun, FaTemperatureHigh } from 'react-icons/fa';
 import { MdOutlineAccessTimeFilled, MdDateRange } from 'react-icons/md';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const DetailContainer = styled.div`
   background-color: #f8f9fa; /* Light gray background */
@@ -77,18 +77,19 @@ const BackButton = styled.button`
 
 const ClassroomDetail = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const classroom = location.state?.classroom || {};
+  const { number } = useParams(); // Extract the classroom number from the route params
+  const classroom = {}; // Fetch or pass the classroom details based on the number
 
   const handleBack = () => {
-    navigate(-1);
+    navigate('/good-conditions'); // Navigate to the GoodConditions page
   };
 
   return (
     <DetailContainer>
-      <Header>Classroom {classroom.number} Details</Header>
+      <Header>Classroom {number} Details</Header>
       <InfoSection>
         <InfoTitle>Classroom Information</InfoTitle>
+        {/* Render classroom details here */}
         <InfoItem>
           <IconWrapper><FaTint /></IconWrapper>
           Humidity: {classroom.humidity}%

@@ -2,6 +2,16 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { FaHome, FaCalendarAlt, FaClock } from 'react-icons/fa'; // Importing icons from react-icons/fa
 
+
+const classroomsData = [
+  { number: 101, occupied: true },
+  { number: 102, occupied: false },
+  { number: 103, occupied: true },
+  { number: 104, occupied: false },
+  { number: 105, occupied: true },
+  { number: 106, occupied: false },
+];
+
 const StatsWrapper = styled.div`
   display: flex;
   justify-content: space-around;
@@ -50,6 +60,10 @@ const ClockIcon = styled(FaClock)`
 const ClassroomStats = () => {
   const [dateTime, setDateTime] = useState(new Date());
 
+  
+  const occupiedClassrooms = classroomsData.filter(classroom => classroom.occupied);
+  const nonOccupiedClassrooms = classroomsData.filter(classroom => !classroom.occupied);
+
   useEffect(() => {
     const timer = setInterval(() => {
       setDateTime(new Date());
@@ -67,16 +81,16 @@ const ClassroomStats = () => {
       </TitleWrapper>
       <StatsWrapper>
         <StatBox>
-          <h3 style={{ fontFamily: 'Poppins', fontWeight: 300 }}>Number of classrooms in good condition</h3>
-          <p>43</p>
+          <h3 style={{ fontFamily: 'Poppins', fontWeight: 300 }}>Number of classrooms occupied</h3>
+          <p>{occupiedClassrooms.length}</p> {/* Display occupied classrooms count */}
         </StatBox>
         <StatBox>
-          <h3 style={{ fontFamily: 'Poppins', fontWeight: 300 }}>Number of classes available</h3>
-          <p>100</p>
+          <h3 style={{ fontFamily: 'Poppins', fontWeight: 300 }}>Number of classrooms not occupied</h3>
+          <p>{nonOccupiedClassrooms.length}</p> {/* Display non-occupied classrooms count */}
         </StatBox>
         <StatBox>
-          <h3 style={{ fontFamily: 'Poppins', fontWeight: 300 }}>Number of classrooms in bad condition</h3>
-          <p>68</p>
+          <h3 style={{ fontFamily: 'Poppins', fontWeight: 300 }}>Total number of classrooms</h3>
+          <p>{classroomsData.length}</p> {/* Display total number of classrooms */}
         </StatBox>
         <StatBox>
           <h3 style={{ fontFamily: 'Poppins', fontWeight: 300 }}>Date and Time</h3>
