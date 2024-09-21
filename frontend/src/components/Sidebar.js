@@ -1,12 +1,12 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaSmile } from 'react-icons/fa'; // Removed FaFrown icon
+import { FaHome, FaSmile, FaBell, FaSlidersH } from 'react-icons/fa'; // Added FaBell and FaSlidersH for new interfaces
 import styled from 'styled-components';
+import { FaChartLine } from 'react-icons/fa';
 import SidebarImage from '../assets/jandouba.jpg'; 
-import SidebarImage2 from '../assets/kahla w zarka.png'; // Replace with your second image path
 
 const SidebarWrapper = styled.div`
-  width: 220px; /* Adjusted width */
+  width: 220px; 
   background-color: #fff;
   padding: 20px;
   height: 100vh;
@@ -14,16 +14,10 @@ const SidebarWrapper = styled.div`
 `;
 
 const SidebarImageStyled = styled.img`
-  width: 210px; /* Set width */
-  height: 300px; /* Set height */
-  border-radius: 20px; /* Add border radius */
-  margin-bottom: 30px; /* Adjusted margin from the bottom */
-`;
-
-const SidebarImageStyled2 = styled.img`
-  width: 244px; /* Set width */
-  height: 29px; /* Set height */
-  margin-right: 500px; /* Move the image to the left */
+  width: 210px;
+  height: 300px;
+  border-radius: 20px;
+  margin-bottom: 30px;
 `;
 
 const SidebarLink = styled(NavLink)`
@@ -52,6 +46,7 @@ const IconWrapper = styled.div`
 
 const Separator = styled.hr`
   border-top: 1px solid #ccc;
+  margin: 5px 0; /* Adjusted to add more spacing between sections */
 `;
 
 const Sidebar = () => {
@@ -62,12 +57,36 @@ const Sidebar = () => {
         <span>Home</span>
       </SidebarLink>
       <Separator />
-      <SidebarLink to="/good-conditions"> {/* Renamed to sorted-conditions */}
+      
+      <SidebarLink to="/good-conditions">
         <IconWrapper><FaSmile /></IconWrapper>
         <span>Sorted conditions</span>
       </SidebarLink>
+      <Separator />
+
+      
+      <SidebarLink to="/notifications">
+        <IconWrapper><FaBell /></IconWrapper>
+        <span>Notifications</span>
+      </SidebarLink>
+
+
+      <Separator />
+      
+      <SidebarLink to="/threshold-settings">
+        <IconWrapper><FaSlidersH /></IconWrapper>
+        <span>Range Settings</span>
+
+        
+      </SidebarLink>
+      <Separator />
+
+      <SidebarLink to="/predicted-conditions">
+        <IconWrapper><FaChartLine /></IconWrapper> {/* Prediction icon */}
+        <span>Predicted Conditions</span>
+      </SidebarLink>
+
       <SidebarImageStyled src={SidebarImage} alt="Sidebar Image" />
-      <SidebarImageStyled2 src={SidebarImage2} alt="Second Sidebar Image" />
     </SidebarWrapper>
   );
 };

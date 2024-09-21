@@ -17,8 +17,7 @@ const DetailContainer = styled.div`
   transition: box-shadow 0.3s ease; /* Smooth transition for box shadow */
 
   &:hover {
-    box-shadow: 0 0 1rem rgba(0, 0, 255, 0.3); /* Blue shadow on hover */
-  }
+    box-shadow: 0 0 1rem rgba(0, 0, 255, 0.3); 
 `;
 
 const Header = styled.h1`
@@ -89,7 +88,7 @@ const ClassroomDetail = () => {
       <Header>Classroom {number} Details</Header>
       <InfoSection>
         <InfoTitle>Classroom Information</InfoTitle>
-        {/* Render classroom details here */}
+        
         <InfoItem>
           <IconWrapper><FaTint /></IconWrapper>
           Humidity: {classroom.humidity}%

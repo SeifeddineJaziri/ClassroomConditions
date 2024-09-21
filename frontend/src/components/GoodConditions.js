@@ -287,7 +287,7 @@ const GoodConditions = () => {
 
   return (
     <div>
-      <h1 style={{ textAlign: 'center' }}>Good Conditions</h1>
+      <h1 style={{ textAlign: 'center' }}>Sorted Conditions</h1>
       
       <InputContainer>
         <Input
