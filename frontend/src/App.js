@@ -5,9 +5,9 @@ import Home from './components/Home';
 import GoodConditions from './components/GoodConditions'; 
 import ClassroomDetail from './components/ClassroomDetail'; 
 import Navigation from './components/Navigation';
-import Notifications from './components/Notifications'; // Import Notifications component
-import ThresholdSettings from './components/ThresholdSettings'; // Import ThresholdSettings component
-import PredictedConditions from './components/PredictedConditions';
+import Notifications from './components/Notifications';
+import ThresholdSettings from './components/ThresholdSettings';
+import RecommendedClassrooms from './components/RecommendedClassrooms'; 
 
 const App = () => {
   return (
@@ -23,7 +23,7 @@ const App = () => {
               <Route path="/classroom/:number" element={<ClassroomDetail />} /> 
               <Route path="/notifications" element={<Notifications />} /> 
               <Route path="/threshold-settings" element={<ThresholdSettings />} /> 
-              <Route path="/predicted-conditions" element={<PredictedConditions />} />
+              <Route path="/recommended-classrooms" element={<RecommendedClassrooms />} />
             </Routes>
           </div>
         </div>

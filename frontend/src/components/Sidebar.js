@@ -1,8 +1,7 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaHome, FaSmile, FaBell, FaSlidersH } from 'react-icons/fa'; // Added FaBell and FaSlidersH for new interfaces
+import { FaHome, FaSmile, FaBell, FaSlidersH, FaChalkboardTeacher } from 'react-icons/fa'; // Added FaChalkboardTeacher for the new interface
 import styled from 'styled-components';
-import { FaChartLine } from 'react-icons/fa';
 import SidebarImage from '../assets/jandouba.jpg'; 
 
 const SidebarWrapper = styled.div`
@@ -46,7 +45,7 @@ const IconWrapper = styled.div`
 
 const Separator = styled.hr`
   border-top: 1px solid #ccc;
-  margin: 5px 0; /* Adjusted to add more spacing between sections */
+  margin: 5px 0;
 `;
 
 const Sidebar = () => {
@@ -64,26 +63,24 @@ const Sidebar = () => {
       </SidebarLink>
       <Separator />
 
-      
       <SidebarLink to="/notifications">
         <IconWrapper><FaBell /></IconWrapper>
         <span>Notifications</span>
       </SidebarLink>
-
-
       <Separator />
       
       <SidebarLink to="/threshold-settings">
         <IconWrapper><FaSlidersH /></IconWrapper>
         <span>Range Settings</span>
-
-        
       </SidebarLink>
       <Separator />
 
-      <SidebarLink to="/predicted-conditions">
-        <IconWrapper><FaChartLine /></IconWrapper> {/* Prediction icon */}
-        <span>Predicted Conditions</span>
+      
+      
+
+      <SidebarLink to="/recommended-classrooms">
+        <IconWrapper><FaChalkboardTeacher /></IconWrapper>
+        <span>Recommended Classrooms</span>
       </SidebarLink>
 
       <SidebarImageStyled src={SidebarImage} alt="Sidebar Image" />

@@ -87,6 +87,34 @@ import { useNavigate } from 'react-router-dom';
   ];
   
 
+  const RectangleContainer = styled.div`
+  position: absolute;
+  top: 170px;
+  right: 50px;
+  display: flex;
+  flex-direction: row; 
+  gap: 30px; 
+`;
+
+const RectangleWrapper = styled.div`
+  display: flex;
+  align-items: center; 
+  gap: 5px;
+`;
+
+const Rectangle = styled.div`
+  width: 20px;
+  height: 20px;
+  background-color: ${({ occupied }) => (occupied ? '#e74c3c' : '#2ecc71')};
+  border-radius: 4px;
+`;
+
+const Label = styled.span`
+  font-size: 15px;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
+`;
+
 
 const slideInNext = keyframes`
   from {
@@ -289,6 +317,19 @@ const GoodConditions = () => {
     <div>
       <h1 style={{ textAlign: 'center' }}>Sorted Conditions</h1>
       
+      <RectangleContainer>
+  <RectangleWrapper>
+    <Label>Occupied</Label>
+    <Rectangle occupied />
+  </RectangleWrapper>
+  <RectangleWrapper>
+    <Label>Not Occupied</Label>
+    <Rectangle />
+  </RectangleWrapper>
+</RectangleContainer>
+
+
+
       <InputContainer>
         <Input
           type="time"
@@ -372,4 +413,3 @@ const GoodConditions = () => {
 };
 
 export default GoodConditions;
-

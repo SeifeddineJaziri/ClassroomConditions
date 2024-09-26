@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { FaExclamationCircle } from 'react-icons/fa'; // Icon for notifications
+import { FaExclamationCircle } from 'react-icons/fa'; 
 
 const NotificationsWrapper = styled.div`
   padding: 20px;
