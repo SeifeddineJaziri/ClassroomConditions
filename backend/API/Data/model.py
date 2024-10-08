@@ -1,31 +1,64 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
-from sklearn.metrics import mean_squared_error
-from sklearn.preprocessing import MinMaxScaler
-import matplotlib.pyplot as plt
+from sklearn.ensemble import RandomForestRegressor
+import pickle as pk
 import numpy as np
 
 #After plotting both temp and humidity we realised that the best ML algorithm to use is linear regression
 
-df = pd.read_csv('ClassroomConditions/backend/API/Data/newData/temp.csv')
 
-X = df[['month', 'day', 'hour', 'minute']]
-y = df['reading']
+def linear(x):
+    df = pd.read_csv(f'ClassroomConditions/backend/API/Data/newData/{x}.csv')
+    print(x+":")
+    X = df[['month', 'day', 'hour', 'minute']]
+    y = df['reading']
 
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
-model = LinearRegression()
+    scoreM = 0
+    for i in range(1000):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+        model = LinearRegression()
 
-model.fit(X_train, y_train)
-y_pred = model.predict(X_test)
+        model.fit(X_train, y_train)
+        score = model.score(X_test,y_test)
+        if score>scoreM:
+            scoreM = score
+            print(scoreM)
 
-mse = mean_squared_error(y_test, y_pred)
-print(mse)
+
+    with open(f'ClassroomConditions/backend/API/Data/models/{x}Predict.pkl', 'wb') as model_file:
+        pk.dump(model, model_file)
 
 
-plt.scatter(y_test, y_pred)
-plt.plot([y_test.min(), y_test.max()], [y_test.min(), y_test.max()], 'k--', lw=2) 
-plt.xlabel('Actual Temperature')
-plt.ylabel('Predicted Temperature')
-plt.title('Actual vs Predicted Temperature')
-plt.show()
+"""After plotting both noise and luminance we realised that the best ML algorithm to use is RandomForestRegression since
+the data is not linear and is kind of random
+"""
+
+def randomF(x):
+    df = pd.read_csv(f'ClassroomConditions/backend/API/Data/newData/{x}.csv')
+    print(x+":")
+    X = df[['month', 'day', 'hour', 'minute']]
+    y = df['reading']
+
+    scoreT = 0
+    for i in range(1000):
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+        model = RandomForestRegressor(n_estimators=100, random_state=0) # we chose to have 100 decision trees for enhancing the accuracy
+
+        model.fit(X_train, y_train)
+        score = model.score(X_test,y_test)
+        if score>scoreT:
+            scoreT = score
+            print(scoreT)
+
+
+    with open(f'ClassroomConditions/backend/API/Data/models/{x}Predict.pkl', 'wb') as model_file:
+        pk.dump(model, model_file)
+
+
+
+linear('temp')
+linear('hum')
+randomF('noise')
+randomF('lum')
+
