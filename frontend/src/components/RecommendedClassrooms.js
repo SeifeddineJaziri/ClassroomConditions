@@ -11,14 +11,38 @@ const RecommendedClassrooms = () => {
   };
 
   const handleButtonClick = async () => {
-    const response = await fetch('/api/classrooms');
+    const { hour, minute } = selectedTime;
+
+    // Check if the time is selected
+    if (!hour && !minute) {
+      console.error('Please select a time before fetching recommendations.');
+      return;
+    }
+
+    // Sending the selected time to the server
+    const response = await fetch('http://localhost:8000/time', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        hour,
+        minute,
+      }),
+    });
+
+    if (!response.ok) {
+      console.error('Failed to fetch classrooms:', response.status);
+      return;
+    }
+
     const data = await response.json();
 
     const recommended = data.filter(classroom => {
       const classroomHour = parseInt(classroom.time.split(':')[0], 10);
       const classroomMinute = parseInt(classroom.time.split(':')[1], 10);
       
-      const isTimeMatching = classroomHour === selectedTime.hour && classroomMinute === selectedTime.minute;
+      const isTimeMatching = classroomHour === hour && classroomMinute === minute;
       const isConditionGood = classroom.temperature < 25 && classroom.humidity < 50;
 
       return isTimeMatching && isConditionGood;
@@ -30,9 +54,10 @@ const RecommendedClassrooms = () => {
 
   return (
     <div style={{ textAlign: 'center' }}>
-      {/* Clock Component */}
       <Clock onTimeChange={handleTimeChange} />
-      
+
+     
+
       {isTimeSelected && (
         <div style={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: '20px' }}>
           <h2>Recommended Classrooms</h2>

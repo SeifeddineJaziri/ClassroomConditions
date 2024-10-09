@@ -9,7 +9,7 @@ const CarouselWrapper = styled.div`
   display: flex;
   justify-content: center;
   padding: 20px;
-  margin-top: -10px; /* Adjusted margin to move the content 10px lower */
+  margin-top: -10px; 
 `;
 
 const Image = styled.img`

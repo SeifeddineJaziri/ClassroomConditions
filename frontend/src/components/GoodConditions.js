@@ -1,142 +1,7 @@
 import React, { useState } from 'react';
-import styled, { keyframes } from 'styled-components';
-import { FaTint, FaVolumeUp, FaSun, FaTemperatureHigh, FaSmile, FaChalkboardTeacher, FaUserGraduate } from 'react-icons/fa';
-import { MdOutlineAccessTimeFilled, MdDateRange } from "react-icons/md";
-import { useNavigate } from 'react-router-dom';
-
-
-  const classroomsData = [
-    {
-      number: 101,
-      humidity: 55,
-      noise: 40,
-      luminance: 300,
-      temperature: 25,
-      time: '08:00',
-      date: '2024-08-01',
-      occupied: false,
-      students: 25,
-      tutor: 'Dr. Alice Smith',
-      subject: 'Mathematics'
-    },
-    {
-      number: 102,
-      humidity: 60,
-      noise: 45,
-      luminance: 280,
-      temperature: 24,
-      time: '09:00',
-      date: '2024-08-01',
-      occupied: true,
-      students: 30,
-      tutor: 'Prof. John Doe',
-      subject: 'Physics'
-    },
-    {
-      number: 103,
-      humidity: 50,
-      noise: 42,
-      luminance: 320,
-      temperature: 26,
-      time: '10:00',
-      date: '2024-08-02',
-      occupied: false,
-      students: 20,
-      tutor: 'Ms. Emily Johnson',
-      subject: 'Chemistry'
-    },
-    {
-      number: 104,
-      humidity: 58,
-      noise: 38,
-      luminance: 310,
-      temperature: 23,
-      time: '11:00',
-      date: '2024-08-02',
-      occupied: true,
-      students: 28,
-      tutor: 'Mr. Michael Brown',
-      subject: 'Biology'
-    },
-    {
-      number: 105,
-      humidity: 62,
-      noise: 41,
-      luminance: 290,
-      temperature: 25,
-      time: '12:00',
-      date: '2024-08-03',
-      occupied: false,
-      students: 22,
-      tutor: 'Dr. Laura Wilson',
-      subject: 'History'
-    },
-    {
-      number: 106,
-      humidity: 48,
-      noise: 39,
-      luminance: 315,
-      temperature: 24,
-      time: '13:00',
-      date: '2024-08-03',
-      occupied: true,
-      students: 27,
-      tutor: 'Prof. David Lee',
-      subject: 'Geography'
-    }
-  ];
-  
-
-  const RectangleContainer = styled.div`
-  position: absolute;
-  top: 170px;
-  right: 50px;
-  display: flex;
-  flex-direction: row; 
-  gap: 30px; 
-`;
-
-const RectangleWrapper = styled.div`
-  display: flex;
-  align-items: center; 
-  gap: 5px;
-`;
-
-const Rectangle = styled.div`
-  width: 20px;
-  height: 20px;
-  background-color: ${({ occupied }) => (occupied ? '#e74c3c' : '#2ecc71')};
-  border-radius: 4px;
-`;
-
-const Label = styled.span`
-  font-size: 15px;
-  color: #333;
-  font-family: 'Poppins', sans-serif;
-`;
-
-
-const slideInNext = keyframes`
-  from {
-    transform: translateX(70%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-`;
-
-const slideInPrev = keyframes`
-  from {
-    transform: translateX(-70%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-`;
+import styled from 'styled-components';
+import { FaTint, FaVolumeUp, FaSun, FaTemperatureHigh } from 'react-icons/fa';
+import { MdOutlineAccessTimeFilled, MdDateRange } from 'react-icons/md';
 
 const CardContainer = styled.div`
   display: flex;
@@ -160,12 +25,9 @@ const Card = styled.div`
   height: 100%;
   transition: transform 0.8s, box-shadow 0.8s;
   transform-style: preserve-3d;
-  transform: ${({ isFlipped }) => (isFlipped ? 'rotateY(180deg)' : 'rotateY(0deg)')};
   cursor: pointer;
-  animation: ${({ slideDirection }) => slideDirection === 'next' ? slideInNext : slideInPrev} 0.5s ease;
 
   &:hover {
-    transform: rotateY(180deg);
     box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.3);
   }
 `;
@@ -177,26 +39,50 @@ const CardFace = styled.div`
   backface-visibility: hidden;
   border-radius: 8px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-  border-bottom-left-radius: 8px;
-  border-bottom-right-radius: 8px;
   padding: 20px;
 `;
 
 const CardFront = styled(CardFace)`
-  background-color: ${({ occupied }) => (occupied ? '#f8d7da' : '#d4edda')};
+  background-color: #d4edda;
   color: #60707E;
 `;
 
-const CardBack = styled(CardFace)`
-  background: linear-gradient(135deg, #3498db, #2ecc71);
-  color: #fff;
-  transform: rotateY(180deg);
+const Title = styled.h2`
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
-  gap: 10px;
+  margin-bottom: 10px;
+`;
+
+const HumidityIcon = styled(FaTint)`color: #3498db;`;
+const NoiseIcon = styled(FaVolumeUp)`color: #e74c3c;`;
+const LuminanceIcon = styled(FaSun)`color: #f39c12;`;
+const TemperatureIcon = styled(FaTemperatureHigh)`color: #2ecc71;`;
+const TimeIcon = styled(MdOutlineAccessTimeFilled)`color: #9b59b6;`;
+const DateIcon = styled(MdDateRange)`color: #3498db;`;
+
+const InputContainer = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+  flex-direction: column;
+  align-items: center;
+`;
+
+const InputRow = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px 0;
+`;
+
+const Input = styled.input`
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100px; /* Adjust width as needed */
+  margin: 0 10px;
 `;
 
 const ButtonContainer = styled.div`
@@ -223,191 +109,121 @@ const Button = styled.button`
     cursor: not-allowed;
   }
 `;
-
-const Title = styled.h2`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 10px;
-`;
-
-const IconWrapper = styled.span`
-  margin-right: 10px;
-`;
-
-const HumidityIcon = styled(FaTint)`color: #3498db;`;
-const NoiseIcon = styled(FaVolumeUp)`color: #e74c3c;`;
-const LuminanceIcon = styled(FaSun)`color: #f39c12;`;
-const TemperatureIcon = styled(FaTemperatureHigh)`color: #2ecc71;`;
-const SmileIcon = styled(FaSmile)`color: #f7b731;`;
-const TimeIcon = styled(MdOutlineAccessTimeFilled)`color: #9b59b6;`;
-const DateIcon = styled(MdDateRange)`color: #3498db;`;
-const TutorIcon = styled(FaChalkboardTeacher)`color: #fff;`;
-const StudentIcon = styled(FaUserGraduate)`color: #fff;`;
-
-const InputContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  margin: 20px 0;
-`;
-
-const Input = styled.input`
-  padding: 10px;
-  font-size: 16px;
-  border-radius: 5px;
-  border: 1px solid #ccc;
-  width: 200px;
-  margin: 0 10px;
+const DateInput = styled(Input)`
+  width: 150px; /* Adjust this value as needed for length */
 `;
 
 const GoodConditions = () => {
   const [searchTime, setSearchTime] = useState('');
   const [searchDate, setSearchDate] = useState('');
-  const [filteredClassrooms, setFilteredClassrooms] = useState(classroomsData);
-  const [currentPage, setCurrentPage] = useState(0);
-  const [cardsPerPage] = useState(3);
-  const [slideDirection, setSlideDirection] = useState('next');
-  const navigate = useNavigate();
+  const [showIcons, setShowIcons] = useState(true); // State to manage icon visibility
+  const [temperature, setTemperature] = useState('--'); // State for temperature
+  const [humidity, setHumidity] = useState('--'); // State for humidity
+  const [luminance, setLuminance] = useState('--'); // State for luminance
+  const [noise, setNoise] = useState('--'); // State for noise
+  const [time, setTime] = useState('--:--'); // State for time
+  const [date, setDate] = useState('----/--/--'); // State for date
+  const [StudyScore ,setStudyScore ] = useState('--') ; 
 
   const handleTimeChange = (e) => {
-    const time = e.target.value;
-    setSearchTime(time);
-    filterClassrooms(time, searchDate);
+    setSearchTime(e.target.value);
   };
 
   const handleDateChange = (e) => {
-    const date = e.target.value;
-    setSearchDate(date);
-    filterClassrooms(searchTime, date);
+    setSearchDate(e.target.value);
   };
 
-  const filterClassrooms = (time, date) => {
-    let filtered = classroomsData;
-    if (time) {
-      filtered = filtered.filter(classroom => classroom.time === time);
+  const handleFetch = () => {
+    if (!searchDate || !searchTime) {
+      console.error('Please provide both date and time before fetching.');
+      return;
     }
-    if (date) {
-      filtered = filtered.filter(classroom => classroom.date === date);
-    }
-    setFilteredClassrooms(filtered);
-  };
 
-  const handleCardClick = (classroom) => {
-    navigate(`/classroom/${classroom.number}`, { state: { classroom } });
-  };
+    const month = searchDate.slice(5, 7);
+    const day = searchDate.slice(8, 10);
+    const hour = searchTime.slice(0, 2);
+    const minute = searchTime.slice(3, 5);
 
-  const handleNext = () => {
-    setSlideDirection('next');
-    if (currentPage < Math.ceil(filteredClassrooms.length / cardsPerPage) - 1) {
-      setCurrentPage(currentPage + 1);
-    }
-  };
+    setShowIcons(false); 
 
-  const handlePrevious = () => {
-    setSlideDirection('prev');
-    if (currentPage > 0) {
-      setCurrentPage(currentPage - 1);
-    }
+    fetch('http://localhost:8000/time', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ month: parseInt(month), day: parseInt(day), hour: parseInt(hour), minute: parseInt(minute) }),
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Server responded with status: ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        setStudyScore(`${(data.StudyScore)}`);
+        setTemperature(`${Math.round(data.variables.temp)}°C`);
+        setHumidity(`${Math.round(data.variables.hum)}%`);
+        setLuminance(`${Math.round(data.variables.lum)} lux`);
+        setNoise(`${Math.round(data.variables.noise)} dB`);
+        setTime(searchTime);
+        setDate(searchDate);
+        setShowIcons(true); // Show icons after fetching data
+      })
+      .catch((err) => {
+        console.error('Fetch error:', err);
+        setShowIcons(true); // Ensure icons are shown if there's an error
+      });
   };
-
-  const startIdx = currentPage * cardsPerPage;
-  const currentCards = filteredClassrooms.slice(startIdx, startIdx + cardsPerPage);
 
   return (
     <div>
       <h1 style={{ textAlign: 'center' }}>Sorted Conditions</h1>
-      
-      <RectangleContainer>
-  <RectangleWrapper>
-    <Label>Occupied</Label>
-    <Rectangle occupied />
-  </RectangleWrapper>
-  <RectangleWrapper>
-    <Label>Not Occupied</Label>
-    <Rectangle />
-  </RectangleWrapper>
-</RectangleContainer>
-
-
 
       <InputContainer>
-        <Input
-          type="time"
-          placeholder="Enter time (e.g., 08:00)"
-          value={searchTime}
-          onChange={handleTimeChange}
-        />
-        <Input
-          type="date"
-          placeholder="Enter date (YYYY-MM-DD)"
-          value={searchDate}
-          onChange={handleDateChange}
-        />
+        <InputRow>
+          <label htmlFor="time-input" style={{ marginRight: '10px' }}>Select Time:</label>
+          <Input
+            id="time-input"
+            type="time"
+            value={searchTime}
+            onChange={handleTimeChange}
+            aria-label="Time input"
+          />
+          <label htmlFor="date-input" style={{ marginRight: '10px' }}>Select Date:</label>
+          <DateInput
+            id="date-input"
+            type="date"
+            value={searchDate}
+            onChange={handleDateChange}
+            aria-label="Date input"
+          />
+        </InputRow>
+        <ButtonContainer>
+          <Button onClick={handleFetch}>Submit</Button>
+        </ButtonContainer>
       </InputContainer>
 
       <CardContainer>
-        {currentCards.map((classroom, index) => (
-          <CardWrapper key={index}>
-            <Card
-              onClick={() => handleCardClick(classroom)}
-              occupied={classroom.occupied}
-              slideDirection={slideDirection}
-            >
-              <CardFront occupied={classroom.occupied}>
-                <Title>
-                  <IconWrapper><LuminanceIcon /></IconWrapper>
-                  <IconWrapper><SmileIcon /></IconWrapper>
-                  Classroom {classroom.number}
-                </Title>
-                <p>
-                  <IconWrapper><HumidityIcon /></IconWrapper> Humidity: {classroom.humidity}%
-                </p>
-                <p>
-                  <IconWrapper><NoiseIcon /></IconWrapper> Noise Level: {classroom.noise} dB
-                </p>
-                <p>
-                  <IconWrapper><LuminanceIcon /></IconWrapper> Luminance Level: {classroom.luminance} lux
-                </p>
-                <p>
-                  <IconWrapper><TemperatureIcon /></IconWrapper> Temperature: {classroom.temperature}°C
-                </p>
-                <p>
-                  <IconWrapper><TimeIcon /></IconWrapper> Time: {classroom.time}
-                </p>
-                <p>
-                  <IconWrapper><DateIcon /></IconWrapper> Date: {classroom.date}
-                </p>
-                <p>
-                  <IconWrapper></IconWrapper> Occupied: {classroom.occupied ? 'Yes' : 'No'}
-                </p>
-              </CardFront>
-              <CardBack>
-                <h3>Details</h3>
-                {classroom.occupied ?(
-                  <>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                      <TutorIcon size={24} />
-                      <span>{classroom.tutor}</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginTop: '10px' }}>
-                      <StudentIcon size={24} />
-                      <span>{classroom.students} students</span>
-                    </div>
-                    <p>Subject: {classroom.subject}</p>
-                  </>
-                ) : (
-                  <p>This classroom is currently empty.</p>
-                )}
-              </CardBack>
-            </Card>
-          </CardWrapper>
-        ))}
+        <CardWrapper>
+          <Card>
+            <CardFront>
+              <Title id="classroom-number">Classroom</Title>
+              {showIcons && ( // Conditional rendering for icons
+                <>
+                  <p id="StudyScore" >StudyScore: {StudyScore}</p>
+                  <p id="temperature"><TemperatureIcon /> Temp: {temperature}</p>
+                  <p id="humidity"><HumidityIcon /> Humidity: {humidity}</p>
+                  <p id="luminance"><LuminanceIcon /> Luminance: {luminance}</p>
+                  <p id="noise"><NoiseIcon /> Noise: {noise}</p>
+                  <p id="time"><TimeIcon /> {time}</p>
+                  <p id="date"><DateIcon /> {date}</p>
+                </>
+              )}
+            </CardFront>
+          </Card>
+        </CardWrapper>
       </CardContainer>
-
-      <ButtonContainer>
-        <Button onClick={handlePrevious} disabled={currentPage === 0}>Previous</Button>
-        <Button onClick={handleNext} disabled={currentPage >= Math.ceil(filteredClassrooms.length / cardsPerPage) - 1}>Next</Button>
-      </ButtonContainer>
     </div>
   );
 };
